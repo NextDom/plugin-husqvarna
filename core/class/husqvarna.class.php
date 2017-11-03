@@ -53,100 +53,113 @@ class husqvarna extends eqLogic {
 
 	public function postInsert()
 	{
-        $state = $this->getCmd(null, 'state');
-        if ( ! is_object($state) ) {
-            $state = new husqvarnaCmd();
-			$state->setName('Etat');
-			$state->setEqLogic_id($this->getId());
-			$state->setType('info');
-			$state->setSubType('binary');
-			$state->setLogicalId('state');
-			$state->setDisplay('generic_type','PRESENCE');
-			$state->setDisplay('invertBinary',1);
-			$state->setTemplate('dashboard', 'presence');
-			$state->setTemplate('mobile', 'presence');
-			$state->save();
-		}
-/*         $lastfilename = $this->getCmd(null, 'lastfilename');
-        if ( ! is_object($lastfilename) ) {
-            $lastfilename = new husqvarnaCmd();
-			$lastfilename->setName('Nom du dernier fichier');
-			$lastfilename->setEqLogic_id($this->getId());
-			$lastfilename->setType('info');
-			$lastfilename->setSubType('string');
-			$lastfilename->setLogicalId('lastfilename');
-			$lastfilename->setTemplate('dashboard', 'lastfilename');
-			$lastfilename->setTemplate('mobile', 'lastfilename');
-			$lastfilename->save();
-		} */
+        $this->postUpdate();
+	}
+
+	private function getListeDefaultCommandes()
+	{
+		return array(	"batteryPercent" => array('Batterie', 'info', 'numeric', "%", 0, "GENERIC_INFO", 'badge', 'badge', ''),
+						"connected" => array('Connecté', 'info', 'binary', "", 0, "GENERIC_INFO", 'alert', 'alert', ''),
+						"mowerStatus" => array('Etat robot', 'info', 'string', "", 0, "GENERIC_INFO", 'badge', 'badge', ''),
+						"operatingMode" => array('Mode de fonctionnement', 'info', 'string', "", 0, "GENERIC_INFO", 'badge', 'badge', ''),
+						"lastErrorCode" => array('Dernier code d\'erreur', 'info', 'numeric', "", 0, "GENERIC_INFO", 'badge', 'badge', ''),
+						"commande" => array('Commande', 'action', 'select', "", 0, "GENERIC_ACTION", '', '', 'START|'.__('Démarrer',__FILE__).';STOP|'.__('Arrêter',__FILE__).';PARK|'.__('Ranger',__FILE__))
+		);
 	}
 
 	public function postUpdate()
 	{
-        $state = $this->getCmd(null, 'state');
-        if ( ! is_object($state) ) {
-            $state = new husqvarnaCmd();
-			$state->setName('Etat');
-			$state->setEqLogic_id($this->getId());
-			$state->setType('info');
-			$state->setSubType('binary');
-			$state->setLogicalId('state');
-			$state->setDisplay('invertBinary',1);
-			$state->setDisplay('generic_type','PRESENCE');
-			$state->setTemplate('dashboard', 'presence');
-			$state->setTemplate('mobile', 'presence');
-			$state->save();
-			$restart = true;
-		}
-/*         $lastfilename = $this->getCmd(null, 'lastfilename');
-        if ( ! is_object($lastfilename) ) {
-            $lastfilename = new husqvarnaCmd();
-			$lastfilename->setName('Nom du dernier fichier');
-			$lastfilename->setEqLogic_id($this->getId());
-			$lastfilename->setType('info');
-			$lastfilename->setSubType('string');
-			$lastfilename->setLogicalId('lastfilename');
-			$lastfilename->setTemplate('dashboard', 'lastfilename');
-			$lastfilename->setTemplate('mobile', 'lastfilename');
-			$lastfilename->save();
-			$restart = true;
-		}
-		else
+		foreach( $this->getListeDefaultCommandes() as $id => $data)
 		{
-			$lastfilename->setTemplate('dashboard', 'lastfilename');
-			$lastfilename->setTemplate('mobile', 'lastfilename');
-			$lastfilename->save();
+			list($name, $type, $subtype, $unit, $invertBinary, $generic_type, $template_dashboard, $template_mobile, $listValue) = $data;
+			$cmd = $this->getCmd(null, $id);
+			if ( ! is_object($cmd) ) {
+				$cmd = new husqvarnaCmd();
+				$cmd->setName($name);
+				$cmd->setEqLogic_id($this->getId());
+				$cmd->setType($type);
+				$cmd->setSubType($subtype);
+				$cmd->setLogicalId($id);
+				if ( $listValue != "" )
+				{
+					$cmd->setConfiguration('listValue', $listValue);
+				}
+				$cmd->setDisplay('invertBinary',$invertBinary);
+				$cmd->setDisplay('generic_type', $generic_type);
+				$cmd->setTemplate('dashboard', $template_dashboard);
+				$cmd->setTemplate('mobile', $template_mobile);
+				$cmd->save();
+			}
+			else
+			{
+				$cmd->setType($type);
+				$cmd->setSubType($subtype);
+				$cmd->setDisplay('invertBinary',$invertBinary);
+				$cmd->setDisplay('generic_type', $generic_type);
+				$cmd->setTemplate('dashboard', $template_dashboard);
+				$cmd->setTemplate('mobile', $template_mobile);
+				if ( $listValue != "" )
+				{
+					$cmd->setConfiguration('listValue', $listValue);
+				}
+				$cmd->save();
+			}
 		}
- */
 	}
 
 	public function preRemove() {
 	}
 
 	public static function pull() {
-		foreach (self::byType('husqvarna') as $eqLogic) {
-			$eqLogic->scan();
+		if ( config::byKey('account', 'husqvarna') != "" || config::byKey('password', 'husqvarna') != "" )
+		{
+			log::add('husqvarna','debug','scan movers info');
+			foreach (self::byType('husqvarna') as $eqLogic) {
+				$eqLogic->scan();
+			}
 		}
 	}
 
 	public function scan() {
-		if ( config::byKey('account', 'husqvarna') != "" || config::byKey('password', 'husqvarna') != "" )
-		{
-			$session_husqvarna = new husqvarna_api();
-			$session_husqvarna->login(config::byKey('account', 'husqvarna'), config::byKey('password', 'husqvarna'));
-			if ( $this->getIsEnable() ) {
-				if ( $this->getCookiesInfo() ) {
-					$this->refreshInfo();
-					$this->logOut();
+		$session_husqvarna = new husqvarna_api();
+		$session_husqvarna->login(config::byKey('account', 'husqvarna'), config::byKey('password', 'husqvarna'));
+		if ( $this->getIsEnable() ) {
+			$status = $session_husqvarna->get_status($this->getLogicalId());
+			log::add('husqvarna','info',"Refresh Status ".$this->getLogicalId());
+			foreach( $this->getListeDefaultCommandes() as $id => $data)
+			{
+				list($name, $type, $subtype, $unit, $invertBinary, $generic_type, $template_dashboard, $template_mobile, $listValue) = $data;
+				if ( $type != "action" )
+				{
+					$cmd = $this->getCmd(null, $id);
+					if ($cmd->execCmd() != $cmd->formatValue($status->{$id}))
+					{
+						log::add('husqvarna','info',"Refresh ".$id." : ".$status->{$id});
+						$cmd->setCollectDate('');
+						$cmd->event($status->{$id});
+					}
 				}
 			}
 		}
+		$session_husqvarna->logOut();
 	}
 }
 
 class husqvarnaCmd extends cmd 
 {
     /*     * *************************Attributs****************************** */
+    public function execute($_options = null) {
+		if ( $this->getLogicalId() == 'commande' && $_options['select'] != "" )
+		{
+			log::add('husqvarna','info',"Commande execute ".$this->getLogicalId()." ".$_options['select']);
+			$session_husqvarna = new husqvarna_api();
+			$session_husqvarna->login(config::byKey('account', 'husqvarna'), config::byKey('password', 'husqvarna'));
+			$eqLogic = $this->getEqLogic();
+
+			$order = $session_husqvarna->control($eqLogic->getLogicalId(), $_options['select']);
+			log::add('husqvarna','info',"Commande traité : Code = ".$order->status);
+		}
+	}
 
 
     /*     * ***********************Methode static*************************** */
@@ -155,10 +168,5 @@ class husqvarnaCmd extends cmd
     /*     * *********************Methode d'instance************************* */
 
     /*     * **********************Getteur Setteur*************************** */
-	public function postInsert()
-	{
-		if ( ! defined($this->logicalId) || $this->logicalId == "" )
-			$this->logicalId = 'pattern';
-	}
 }
 ?>

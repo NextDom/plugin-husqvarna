@@ -4,16 +4,8 @@ image::../images/husqvarna_screenshot1.jpg[align="center"]
 
 Il faut définir certains paramètres global au plugin :
 
-- Port husqvarna : Port sur lequel le daemon écoutera pour les fichiers.
+- Compte : Compte husqvarna.
 
-- Local IP : Adresse ip d'écoute du daemon. Il est préférable de laisser 0.0.0.0.
-
-- IP Autorisées : Liste les IPs autorisées à déposer des fichiers.
-+
-Format : liste séparé par virgule sans espace. La liste peut contenir des ips (192.168.1.1), des masques ( (192.168.1.0/32) ou des plages (192.168.1.1-192.168.1.12).
-
-- Chemin des enregistrements : Chemin dans lequel les fichiers seront stockés.
-
-- Debug daemon : Permet d'activer le debug du daemon husqvarna.
+- Password : Mot de passe de ce compte.
 
 Et pour finir, cliquer sur Sauvegarder.

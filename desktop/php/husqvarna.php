@@ -116,17 +116,14 @@ sendVarToJS('eqType', 'husqvarna');
         </form>
 
         <legend>{{Indicateurs}}</legend>
-        <a class="btn btn-success btn-sm cmdAction" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter une pattern image}}</a><br/><br/>
         <table id="table_cmd" class="table table-bordered table-condensed">
             <thead>
                 <tr>
                     <th style="width: 50px;">#</th>
                     <th style="width: 230px;">{{Nom}}</th>
                     <th style="width: 110px;">{{Sous-Type}}</th>
-                    <th>{{Valeur}}</th>
-                    <th style="width: 100px;">{{Unité}}</th>
-                    <th style="width: 200px;">{{Paramètres}}</th>
-                    <th style="width: 100px;"></th>
+                    <th style="width: 100px;">{{Paramètres}}</th>
+                    <th style="width: 200px;"></th>
                 </tr>
             </thead>
             <tbody>
