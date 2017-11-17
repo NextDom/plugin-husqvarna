@@ -125,7 +125,7 @@ class husqvarna extends eqLogic {
 		$session_husqvarna->login(config::byKey('account', 'husqvarna'), config::byKey('password', 'husqvarna'));
 		if ( $this->getIsEnable() ) {
 			$status = $session_husqvarna->get_status($this->getLogicalId());
-			log::add('husqvarna','info',"Refresh Status ".$this->getLogicalId());
+			log::add('husqvarna','debug',"Refresh Status ".$this->getLogicalId());
 			foreach( $this->getListeDefaultCommandes() as $id => $data)
 			{
 				list($name, $type, $subtype, $unit, $invertBinary, $generic_type, $template_dashboard, $template_mobile, $listValue) = $data;
@@ -157,7 +157,7 @@ class husqvarnaCmd extends cmd
 			$eqLogic = $this->getEqLogic();
 
 			$order = $session_husqvarna->control($eqLogic->getLogicalId(), $_options['select']);
-			log::add('husqvarna','info',"Commande traité : Code = ".$order->status);
+			log::add('husqvarna','debug',"Commande traité : Code = ".$order->status);
 		}
 	}
 

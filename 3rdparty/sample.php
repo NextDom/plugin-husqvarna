@@ -1,4 +1,5 @@
 <?php
+require_once("husqvarna_api.class.php");
 $account = "xx@yyy.com";
 $passwd = "ABCDEFGH";
 $session_husqvarna = new husqvarna_api();
