@@ -422,23 +422,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_installation_configuration">1.1.1. Installation/Configuration</a></li>
 <li><a href="#_fonctionnement">1.1.2. Fonctionnement :</a></li>
 <li><a href="#_informations_visibles">1.1.3. Informations visibles :</a></li>
+<li><a href="#_actions_visibles">1.1.4. Actions visibles :</a></li>
 </ul>
 </li>
-<li><a href="#_configuration">1.2. Configuration</a>
-<ul class="sectlevel3">
-<li><a href="#_configuration_foscam">1.2.1. Configuration Foscam</a></li>
-<li><a href="#_configuration_wanscam">1.2.2. Configuration Wanscam</a></li>
-<li><a href="#_configuration_axis">1.2.3. Configuration Axis</a></li>
-<li><a href="#_configuration_escam_chinoises_sur_soc_hisilicon">1.2.4. Configuration Escam (chinoises sur soc Hisilicon)</a></li>
-<li><a href="#_configuration_dahua">1.2.5. Configuration Dahua</a></li>
-<li><a href="#_configuration_vivotek">1.2.6. Configuration Vivotek</a></li>
-<li><a href="#_configuration_hik">1.2.7. Configuration Hik</a></li>
-<li><a href="#_configuration_autres_modèles">1.2.8. Configuration autres modèles</a></li>
-</ul>
-</li>
-<li><a href="#_configuration_le_debug">1.3. Configuration le debug</a></li>
-<li><a href="#_faq">1.4. FAQ</a></li>
-<li><a href="#_changelog">1.5. Changelog</a></li>
+<li><a href="#_configuration">1.2. Configuration</a></li>
+<li><a href="#_faq">1.3. FAQ</a></li>
+<li><a href="#_changelog">1.4. Changelog</a></li>
 </ul>
 </li>
 </ul>
@@ -451,12 +440,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_présentation">1.1. Présentation</h3>
 <div class="paragraph">
-<p>Ce plugin permet de creer un serveur ftp qui notifiera jeedom lorsqu&#8217;un fichier est déposé.
-Très utile pour les cameras IP qui peuvent sur détection de mouvement envoyer un fichier par ftp.</p>
+<p>Ce plugin permet de connaitre l&#8217;état de votre ou vos tondeuses husqvarna.
+Il permet aussi de modifier le mode de celle ci.</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/husqvarna_screenshot3.jpg" alt="husqvarna screenshot3">
+<img src="../images/husqvarna_screenshot1.jpg" alt="husqvarna screenshot1">
 </div>
 </div>
 <div class="sect3">
@@ -475,22 +464,10 @@ Très utile pour les cameras IP qui peuvent sur détection de mouvement envoyer 
 <div class="ulist">
 <ul>
 <li>
-<p>Port husqvarna : Port sur lequel le daemon écoutera pour les fichiers.</p>
+<p>Compte : Compte husqvarna.</p>
 </li>
 <li>
-<p>Local IP : Adresse ip d&#8217;écoute du daemon. Il est préférable de laisser 0.0.0.0.</p>
-</li>
-<li>
-<p>IP Autorisées : Liste les IPs autorisées à déposer des fichiers.</p>
-<div class="paragraph">
-<p>Format : liste séparé par virgule sans espace. La liste peut contenir des ips (192.168.1.1), des masques ( (192.168.1.0/32) ou des plages (192.168.1.1-192.168.1.12).</p>
-</div>
-</li>
-<li>
-<p>Chemin des enregistrements : Chemin dans lequel les fichiers seront stockés.</p>
-</li>
-<li>
-<p>Debug daemon : Permet d&#8217;activer le debug du daemon husqvarna.</p>
+<p>Password : Mot de passe de ce compte.</p>
 </li>
 </ul>
 </div>
@@ -501,11 +478,11 @@ Très utile pour les cameras IP qui peuvent sur détection de mouvement envoyer 
 <div class="sect3">
 <h4 id="_fonctionnement">1.1.2. Fonctionnement :</h4>
 <div class="paragraph">
-<p>Le plugin créera automatiquement les équipements une fois qu&#8217;ils auront envoyé un fichier.</p>
+<p>Le plugin créera automatiquement les équipements une fois que vous aurez configuré votre compte et mot de passe husqvarna.</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/husqvarna_screenshot6.jpg" alt="husqvarna screenshot6">
+<img src="../images/husqvarna_screenshot4.jpg" alt="husqvarna screenshot4">
 </div>
 </div>
 </div>
@@ -514,10 +491,29 @@ Très utile pour les cameras IP qui peuvent sur détection de mouvement envoyer 
 <div class="ulist horizontal">
 <ul class="horizontal">
 <li>
-<p><strong>Etat</strong> : état du husqvarna. C&#8217;est une commande de type info binary. Elle est active durant 10 secondes sur reception de fichier.</p>
+<p><strong>Connecté</strong> : Etat de communication Automover connect husqvarna.</p>
 </li>
 <li>
-<p><strong>lastfilename</strong> : Nom de la dernière capture reçue.</p>
+<p><strong>Batterie</strong> : Niveau de charge de la batterie.</p>
+</li>
+<li>
+<p><strong>Etat robot</strong> : Etat du robot.</p>
+</li>
+<li>
+<p><strong>Mode de fonctionnement</strong> : Mode de fonctionnement actuellement selectionné.</p>
+</li>
+<li>
+<p><strong>Dernier code d'erreur</strong> : Dernier code d&#8217;erreur rencontré.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_actions_visibles">1.1.4. Actions visibles :</h4>
+<div class="ulist horizontal">
+<ul class="horizontal">
+<li>
+<p><strong>Commande</strong> : Changement de mode.</p>
 </li>
 </ul>
 </div>
@@ -561,114 +557,10 @@ Très utile pour les cameras IP qui peuvent sur détection de mouvement envoyer 
 <pre class="highlight"><code>/^def/</code></pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_configuration_foscam">1.2.1. Configuration Foscam</h4>
-<div class="paragraph">
-<p>Unresolved directive in index.asciidoc - include::configuration_foscam.asciidoc[]</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_configuration_wanscam">1.2.2. Configuration Wanscam</h4>
-<div class="paragraph">
-<p>Unresolved directive in index.asciidoc - include::configuration_wanscam.asciidoc[]</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_configuration_axis">1.2.3. Configuration Axis</h4>
-<div class="paragraph">
-<p>Unresolved directive in index.asciidoc - include::configuration_axis.asciidoc[]</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_configuration_escam_chinoises_sur_soc_hisilicon">1.2.4. Configuration Escam (chinoises sur soc Hisilicon)</h4>
-<div class="paragraph">
-<p>Unresolved directive in index.asciidoc - include::configuration_escam.asciidoc[]</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_configuration_dahua">1.2.5. Configuration Dahua</h4>
-<div class="paragraph">
-<p>Unresolved directive in index.asciidoc - include::configuration_dahua.asciidoc[]</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_configuration_vivotek">1.2.6. Configuration Vivotek</h4>
-<div class="paragraph">
-<p>Unresolved directive in index.asciidoc - include::configuration_vivotek.asciidoc[]</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_configuration_hik">1.2.7. Configuration Hik</h4>
-<div class="paragraph">
-<p>Unresolved directive in index.asciidoc - include::configuration_hik.asciidoc[]</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_configuration_autres_modèles">1.2.8. Configuration autres modèles</h4>
-<div class="paragraph">
-<p>Il faut mettre l&#8217;adresse IP de votre jeedom comme serveur FTP..</p>
-</div>
-<div class="paragraph">
-<p>Comme port (généralement 21), il faut mettre le port husqvarna qui a été renseigné dans la page de configuration du plugin (8888 par defaut).</p>
-</div>
-<div class="paragraph">
-<p>Il n&#8217;est pas nécessaire de renseigner de compte, de mot de passe, ni de répertoire.</p>
-</div>
-<div class="paragraph">
-<p><a href="https://www.cameraftp.com/CameraFTP/Support/SupportedCameras.aspx">Documentation générale</a></p>
-</div>
-</div>
 </div>
 <div class="sect2">
-<h3 id="_configuration_le_debug">1.3. Configuration le debug</h3>
-<div class="paragraph">
-<p>Unresolved directive in index.asciidoc - include::configuration_debug.asciidoc[]</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_faq">1.4. FAQ</h3>
+<h3 id="_faq">1.3. FAQ</h3>
 <div class="openblock panel">
-<div class="title">J&#8217;essaie de me connecter au daemon et je ne vois rien</div><div class="content">
-<div class="paragraph">
-<p>Le daemon est n&#8217;autorise pas toutes les commandes FTP. Juste le dépot de fichier pour éviter une faille de sécurité.
-Si vous activez le debug vous devriez avoir le message suivant qui indique que la connexion fonctionne : "[DEBUG] : connect: XXXX".</p>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="title">J&#8217;ai des erreurs "unable to solve:"</div><div class="content">
-<div class="paragraph">
-<p>Votre configuration DNS ne permet pas à Jeedom de retrouver un nom dns de votre équipement. Ce n&#8217;est pas grave.</p>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="title">Je n&#8217;arrive pas à créer mes équipements</div><div class="content">
-<div class="paragraph">
-<p>Les équipements sont créés automatique à la reception de la première image.</p>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="title">Aucune image n&#8217;est sauvegardée</div><div class="content">
-<div class="paragraph">
-<p>Il faut aller dans la log husqvarna_daemon et regarder si des erreurs sont présentes.
-Si des erreurs sont présente, les remonter au développeur <a href="https://www.jeedom.com/forum/viewtopic.php?f=28&amp;t=24684&amp;start=500">via le Forum sur le lien suivant</a></p>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="title">Je souhaite mettre 21 pour le port</div><div class="content">
-<div class="paragraph">
-<p>Le daemon ne peut écouter sur le port standard ftp (21) car il n&#8217;est pas lancé en tant que root.</p>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">J&#8217;ai le message de debug : unable to solve: 192.168.1.26 [Errno 1] Unknown host</div>
-<p>En fait si la camera a un nom DNS, je la nomme avec son nom DNS sinon elle a pour nom  Addr_&lt;IP&gt;. Ce n&#8217;est pas grave, ça veut juste dire que tu n&#8217;as pas configuré de résolution DNS inverse pour l&#8217;IP en question.</p>
-</div>
-<div class="openblock">
 <div class="title">Pourquoi le plugin est gratuit ?</div><div class="content">
 <div class="paragraph">
 <p>Ce plugin est gratuit pour que chacun puisse en profiter simplement. Si vous souhaitez tout de même faire un don au développeur du plugin, merci de me contacter par MP sur le forum.</p>
@@ -684,7 +576,7 @@ Si des erreurs sont présente, les remonter au développeur <a href="https://www
 </div>
 </div>
 <div class="sect2">
-<h3 id="_changelog">1.5. Changelog</h3>
+<h3 id="_changelog">1.4. Changelog</h3>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -703,64 +595,12 @@ Detail complet des mises à jour sur <a href="https://github.com/guenneguezt/plu
 <div class="ulist">
 <ul>
 <li>
-<p>Correction pour les patterns</p>
+<p>Première version bêta.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Anciennes évolutions :</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Ajout d&#8217;une Clef API specifique au plugin</p>
-</li>
-<li>
-<p>Ajout de log pour les patterns</p>
-</li>
-<li>
-<p>Non prise en compte des images si l&#8217;équipement est désactivé</p>
-</li>
-<li>
-<p>Correction pour fonctionner si IP Autorisées est vide.</p>
-</li>
-<li>
-<p>Correction de la commande ALLO</p>
-</li>
-<li>
-<p>Ajout de message d&#8217;erreur lorsque le daemon n&#8217;arrive pas à communiquer avec Jeedom.</p>
-</li>
-<li>
-<p>Plus de prise en compte de l&#8217;IP configuré dans administration&#8658;réseau.</p>
-</li>
-<li>
-<p>Prise en compte des config en https autosigné.</p>
-</li>
-<li>
-<p>Correction du rafraichissement des images</p>
-</li>
-<li>
-<p>Correction du problème de sauvegarde : Une commande portant ce nom (Etat) existe déjà pour cet équipement</p>
-</li>
-<li>
-<p>Modification pour compatibilité Jeedom V3</p>
-</li>
-<li>
-<p>Plus de suivi de version</p>
-</li>
-<li>
-<p>Ajout de la prise en compte de commande type pattern.</p>
-</li>
-<li>
-<p>Gestion des get en tache de fond du daemon.</p>
-</li>
-<li>
-<p>Correction lorsque les captures sont hors répertoire Jeedom.</p>
-</li>
-<li>
-<p>Première version bêta.</p>
-</li>
-</ul>
 </div>
 </div>
 </div>
