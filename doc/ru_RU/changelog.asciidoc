@@ -1,0 +1,7 @@
+WARNING: Detail complet des mises à jour sur https://github.com/guenneguezt/plugin-husqvarna/commits/master[Historique Commit]
+
+Liste des évolutions majeures de la version courante :
+
+- Première version bêta.
+
+Anciennes évolutions :
