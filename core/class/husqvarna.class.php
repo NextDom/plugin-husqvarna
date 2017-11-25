@@ -65,8 +65,8 @@ class husqvarna extends eqLogic {
 						"operatingMode" => array('Mode de fonctionnement', 'info', 'string', "", 0, "GENERIC_INFO", 'badge', 'badge', ''),
 						"lastErrorCode" => array('Dernier code d\'erreur', 'info', 'numeric', "", 0, "GENERIC_INFO", 'badge', 'badge', ''),
 						"commande" => array('Commande', 'action', 'select', "", 0, "GENERIC_ACTION", '', '', 'START|'.__('Démarrer',__FILE__).';STOP|'.__('Arrêter',__FILE__).';PARK|'.__('Ranger',__FILE__)),
-						"nextStartSource" => array('Prochain dÃ©part', 'info', 'string', "", 0, "GENERIC_INFO", 'badge', 'badge', ''),
-						"nextStartTimestamp" => array('Heure prochain dÃ©part', 'info', 'string', "u", 0, "GENERIC_INFO", 'badge', 'badge', ''),
+						"nextStartSource" => array('Prochain départ', 'info', 'string', "", 0, "GENERIC_INFO", 'badge', 'badge', ''),
+						"nextStartTimestamp" => array('Heure prochain départ', 'info', 'string', "u", 0, "GENERIC_INFO", 'badge', 'badge', ''),
 						"storedTimestamp" => array('Heure dernier rapport', 'info', 'string', "u", 0, "GENERIC_INFO", 'badge', 'badge', '')
 		);
 	}
@@ -146,8 +146,7 @@ class husqvarna extends eqLogic {
 						}
 						else
 						{
-							date_default_timezone_set('Europe/Brussels');
-							$cmd->event( date('d M Y H:i', intval(substr($status->{$id},0,10)) - 3600 * (date('I')+1) ));
+							$cmd->event( gmdate('d M Y H:i', intval($status->{$id} / 1000)));
 						}
 					}
 				}
