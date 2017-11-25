@@ -45,6 +45,7 @@ class husqvarna extends eqLogic {
 					$eqLogic->setName($data->name);
 					$eqLogic->setEqType_name('husqvarna');
 					$eqLogic->setIsEnable(1);
+					$eqLogic->setIsVisible(1);
 					$eqLogic->save();
 				}
 			}
@@ -63,7 +64,10 @@ class husqvarna extends eqLogic {
 						"mowerStatus" => array('Etat robot', 'info', 'string', "", 0, "GENERIC_INFO", 'badge', 'badge', ''),
 						"operatingMode" => array('Mode de fonctionnement', 'info', 'string', "", 0, "GENERIC_INFO", 'badge', 'badge', ''),
 						"lastErrorCode" => array('Dernier code d\'erreur', 'info', 'numeric', "", 0, "GENERIC_INFO", 'badge', 'badge', ''),
-						"commande" => array('Commande', 'action', 'select', "", 0, "GENERIC_ACTION", '', '', 'START|'.__('Démarrer',__FILE__).';STOP|'.__('Arrêter',__FILE__).';PARK|'.__('Ranger',__FILE__))
+						"commande" => array('Commande', 'action', 'select', "", 0, "GENERIC_ACTION", '', '', 'START|'.__('Démarrer',__FILE__).';STOP|'.__('Arrêter',__FILE__).';PARK|'.__('Ranger',__FILE__)),
+						"nextStartSource" => array('Prochain dÃ©part', 'info', 'string', "", 0, "GENERIC_INFO", 'badge', 'badge', ''),
+						"nextStartTimestamp" => array('Heure prochain dÃ©part', 'info', 'string', "u", 0, "GENERIC_INFO", 'badge', 'badge', ''),
+						"storedTimestamp" => array('Heure dernier rapport', 'info', 'string', "u", 0, "GENERIC_INFO", 'badge', 'badge', '')
 		);
 	}
 
@@ -136,7 +140,15 @@ class husqvarna extends eqLogic {
 					{
 						log::add('husqvarna','info',"Refresh ".$id." : ".$status->{$id});
 						$cmd->setCollectDate('');
-						$cmd->event($status->{$id});
+						if ($unit  != "u" )
+						{
+							$cmd->event($status->{$id});
+						}
+						else
+						{
+							date_default_timezone_set('Europe/Brussels');
+							$cmd->event( date('d M Y H:i', intval(substr($status->{$id},0,10)) - 3600 * (date('I')+1) ));
+						}
 					}
 				}
 			}
