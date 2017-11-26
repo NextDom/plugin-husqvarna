@@ -2,6 +2,11 @@ WARNING: Detail complet des mises à jour sur https://github.com/guenneguezt/plu
 
 Liste des évolutions majeures de la version courante :
 
-- Première version bêta.
+- Ajout des informations suivantes :
+* Prochain départ
+* Heure prochain départ
+* Heure dernier rapport
 
 Anciennes évolutions :
+
+- Première version bêta.
