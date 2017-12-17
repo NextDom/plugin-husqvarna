@@ -6,7 +6,7 @@ Il permet aussi de modifier le mode de celle ci.
 
 image::../images/husqvarna_screenshot1.jpg[align="center"]
 
-==== Installation/Configuration
+==== Installation/Konfiguration
 
 include::configurationplugin.asciidoc[]
 
