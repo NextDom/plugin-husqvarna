@@ -1,12 +1,12 @@
 {
     "plugins\/husqvarna\/desktop\/php\/husqvarna.php": {
         "Detecter": "Detecter",
-        "Gestion": "Gestion",
-        "Configuration": "Configuration",
-        "Mes equipements": "Mes equipements",
-        "Général": "Général",
-        "Identifiant de l'équipement": "Identifiant de l'équipement",
-        "Nom de l'équipement": "Nom de l'équipement",
+        "Gestion": "Verwaltung",
+        "Configuration": "Konfiguration",
+        "Mes equipements": "Mein Gerät",
+        "Général": "Allgemein",
+        "Identifiant de l'équipement": "Geräte ID",
+        "Nom de l'équipement": "Gerätename",
         "Nom de la husqvarna": "Nom de la husqvarna",
         "Objet parent": "Objet parent",
         "Aucun": "Aucun",

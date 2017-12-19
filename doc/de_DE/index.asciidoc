@@ -10,7 +10,7 @@ image::../images/husqvarna_screenshot1.jpg[align="center"]
 
 include::configurationplugin.asciidoc[]
 
-==== Fonctionnement :
+==== Funktionsweise :
 Le plugin créera automatiquement les équipements une fois que vous aurez configuré votre compte et mot de passe husqvarna.
 
 image::../images/husqvarna_screenshot4.jpg[align="center"]
