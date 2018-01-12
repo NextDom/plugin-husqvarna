@@ -96,12 +96,30 @@ class husqvarna extends eqLogic {
 			}
 			else
 			{
-				$cmd->setType($type);
-				$cmd->setSubType($subtype);
-				$cmd->setDisplay('invertBinary',$invertBinary);
-				$cmd->setDisplay('generic_type', $generic_type);
-				$cmd->setTemplate('dashboard', $template_dashboard);
-				$cmd->setTemplate('mobile', $template_mobile);
+				if ( $cmd->getType() == "" )
+				{
+					$cmd->setType($type);
+				}
+				if ( $cmd->getSubType() == "" )
+				{
+					$cmd->setSubType($subtype);
+				}
+				if ( $cmd->getDisplay('invertBinary') == "" )
+				{
+					$cmd->setDisplay('invertBinary',$invertBinary);
+				}
+				if ( $cmd->getDisplay('generic_type') == "" )
+				{
+					$cmd->setDisplay('generic_type', $generic_type);
+				}
+				if ( $cmd->getDisplay('dashboard') == "" )
+				{
+					$cmd->setTemplate('dashboard', $template_dashboard);
+				}
+				if ( $cmd->getDisplay('mobile') == "" )
+				{
+					$cmd->setTemplate('mobile', $template_mobile);
+				}
 				if ( $listValue != "" )
 				{
 					$cmd->setConfiguration('listValue', $listValue);
@@ -146,7 +164,7 @@ class husqvarna extends eqLogic {
 						}
 						else
 						{
-							$cmd->event( gmdate('d M Y H:i', intval($status->{$id} / 1000)));
+							$cmd->event( date('d M Y H:i', intval(substr($status->{$id},0,10)) - 3600 * (date('I')+1) ));
 						}
 					}
 				}
