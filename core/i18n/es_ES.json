@@ -18,7 +18,7 @@
         "Sous-Type": "Sub-Tipo",
         "Paramètres": "Parámetros",
         "Supprimer": "Borrar",
-        "Sauvegarder": "Salvar"
+        "Sauvegarder": "Guardar"
     },
     "plugins\/husqvarna\/plugin_info\/configuration.php": {
         "Compte husqvarna": "Medidor husqvarna",
