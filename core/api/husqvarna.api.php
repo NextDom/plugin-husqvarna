@@ -35,6 +35,6 @@ try {
     throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
     /*     * *********Catch exeption*************** */
 } catch (Exception $e) {
-    throw new Exception(displayExeption($e), $e->getCode());
+    throw new Exception(displayException($e), $e->getCode());
 }
 ?>
